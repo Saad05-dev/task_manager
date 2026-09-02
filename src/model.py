@@ -23,3 +23,12 @@ class Task:
         if status == "todo" or status == "done" or status == "in-progress":
             self.status = status
             self.updatedAt = datetime.now(timezone.utc)
+
+    def to_dict(self): 
+        return {
+            "id": self.id,
+            "description": self.description,
+            "status": self.status,
+            "createdAt": self.createdAt.strftime('%Y-%m-%d %H:%M:%S'),
+            "updatedAt": self.updatedAt.strftime('%Y-%m-%d %H:%M:%S')
+        }
