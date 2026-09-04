@@ -4,32 +4,70 @@ from model import Task
 task_list = []
 
 def add_task(new_task):
-    task_list.append(new_task)
-
-def show_tasks():
     for task in task_list:
-        print(task)
+        if task.id == new_task.id:
+            return False
+    task_list.append(new_task)
+    return True
 
-def del_task(task_to_delete):
-    if task_to_delete in task_list:
-        task_list.remove(task_to_delete)
-        return True
-    else:
-        return False
+def get_tasks():
+    return task_list
+
+def get_task(task_id)
+    for task in task_list:
+        if task.id == task_id:
+            return task
+
+    return None
+    
+"""
+def show_task(task_id):
+    for task in task_list:
+            if task.id == task_id:
+                print(f"ID:  {task.id}.")
+                print(f"Description:  {task.description}.")
+                print(f"Status:  {task.status}.")
+                print(f"Created at:  {task.createdAt}.")
+                print(f"Last updated:  {task.updatedAt}.")
+                return True
+            else:
+                return False
+"""          
+def del_task(task_id):
+    for task in task_list:
+        if task.id == task_id:
+            task_list.remove(task)
+            return True
+        
+    return False
 
 def edit_task(task_to_edit,new_task):
-    if task_to_edit in task_list:
-        index = task_list.index(task_to_edit)
-        task_list[index] = new_task
-        return True
-    else:
-        return False
+    for task in task_list:
+        if task.id == task_to_edit.id:
+            task_to_edit.description = new_task.description
+            task_to_edit.status = new_task.status
+            return True
+    return False
 
 def list_of_dict(): 
     formatted_tasks = []
     formatted_tasks = [task.to_dict() for task in task_list]
     return formatted_tasks
 
-def save_task(file):
+def list_from_dict(dicts):
+    for entry in dicts:
+        task = Task.from_dict(entry)
+        task_list.append(task)
+
+def save_tasks(file):
     with open(file, "w") as f:
         json.dump(list_of_dict(),f,indent=4)
+
+def load_tasks(file):
+    try:
+        with open(file, "r") as f:
+            dicts = json.load(f)
+            list_from_dict(dicts)
+        return True
+    except FileNotFoundError:
+        return False

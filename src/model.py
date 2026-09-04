@@ -2,14 +2,14 @@ from datetime import datetime, timezone
 
 class Task:
 
-    def __init__(self, id, description, status = "todo"):
+    def __init__(self, id, description, status = "todo",createdAt = None, updatedAt = None):
 
         self.id = id
         self.description = description
         self.status = status
 
-        self.createdAt = datetime.now(timezone.utc)
-        self.updatedAt = datetime.now(timezone.utc)
+        self.createdAt = createdAt if createdAt is not None else datetime.now(timezone.utc)
+        self.updatedAt = updatedAt if updatedAt is not None else datetime.now(timezone.utc)
 
     def change_id(self, id):
         self.id = id
@@ -32,3 +32,11 @@ class Task:
             "createdAt": self.createdAt.strftime('%Y-%m-%d %H:%M:%S'),
             "updatedAt": self.updatedAt.strftime('%Y-%m-%d %H:%M:%S')
         }
+    @classmethod
+    def from_dict(cls,data: dict):
+        return  cls(id=data["id"], 
+                    description=data["description"], 
+                    status=data["status"], 
+                    createdAt=datetime.strptime(data["createdAt"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc),
+                    updatedAt=datetime.strptime(data["updatedAt"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc),
+                    )
