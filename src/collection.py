@@ -13,26 +13,13 @@ def add_task(new_task):
 def get_tasks():
     return task_list
 
-def get_task(task_id)
+def get_task(task_id):
     for task in task_list:
         if task.id == task_id:
             return task
 
     return None
-    
-"""
-def show_task(task_id):
-    for task in task_list:
-            if task.id == task_id:
-                print(f"ID:  {task.id}.")
-                print(f"Description:  {task.description}.")
-                print(f"Status:  {task.status}.")
-                print(f"Created at:  {task.createdAt}.")
-                print(f"Last updated:  {task.updatedAt}.")
-                return True
-            else:
-                return False
-"""          
+             
 def del_task(task_id):
     for task in task_list:
         if task.id == task_id:
@@ -44,8 +31,8 @@ def del_task(task_id):
 def edit_task(task_to_edit,new_task):
     for task in task_list:
         if task.id == task_to_edit.id:
-            task_to_edit.description = new_task.description
-            task_to_edit.status = new_task.status
+            task_to_edit.change_description(new_task.description) 
+            task_to_edit.change_status(new_task.status) 
             return True
     return False
 
