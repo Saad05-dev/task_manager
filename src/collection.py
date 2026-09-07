@@ -51,10 +51,6 @@ def save_tasks(file):
         json.dump(list_of_dict(),f,indent=4)
 
 def load_tasks(file):
-    try:
-        with open(file, "r") as f:
-            dicts = json.load(f)
-            list_from_dict(dicts)
-        return True
-    except FileNotFoundError:
-        return False
+    with open(file, "r") as f:
+        dicts = json.load(f)
+        list_from_dict(dicts)
